@@ -12,7 +12,7 @@ interface TemplateInterface
     /**
      * @return array
      */
-    public function getPlaceHolders(): array;
+    public function getTags(): array;
 
     /**
      * @param array $data
@@ -24,4 +24,9 @@ interface TemplateInterface
      * @return string
      */
     public function getPrefix(): string;
+
+    /**
+     * @return string
+     */
+    public function isTemplated(Template $template): bool;
 }

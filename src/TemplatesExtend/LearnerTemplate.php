@@ -10,7 +10,7 @@ use App\Context\ApplicationContext;
 /**
  *
  */
-class LearnerTemplate implements TemplateInterface
+class LearnerTemplate extends AbstractTemplate
 {
     use SingletonTrait;
 
@@ -22,7 +22,7 @@ class LearnerTemplate implements TemplateInterface
     /**
      * @return string[]
      */
-    public function getPlaceHolders(): array
+    public function getTags(): array
     {
         return [self::PLACE_HOLDER_FIRST_NAME];
     }
@@ -33,8 +33,6 @@ class LearnerTemplate implements TemplateInterface
      */
     public function loadData(array $data): array
     {
-        $data = [];
-
         $user = ApplicationContext::getInstance()->getCurrentUser();
 
         $this->addingData($data, self::PLACE_HOLDER_FIRST_NAME, $user->firstname);
@@ -50,29 +48,4 @@ class LearnerTemplate implements TemplateInterface
         return 'user';
     }
 
-    /*
-     * TODO: à sortir probablement
-     */
-    /**
-     * @param array $data
-     * @param $placeholder
-     * @param $value
-     * @return void
-     */
-    public function addingData(array &$data, $placeholder, $value): void
-    {
-        $data[$this->composerPlaceHolder($placeholder)] = $value;
-    }
-
-    /*
-     * TODO: à sortir probablement
-     */
-    /**
-     * @param $placeholder
-     * @return string
-     */
-    private function composerPlaceHolder($placeholder): string
-    {
-        return sprintf('[%s:%s]', $this->getPrefix(), $placeholder);
-    }
 }

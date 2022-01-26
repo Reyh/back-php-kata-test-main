@@ -12,13 +12,15 @@ use App\Repository\MeetingPointRepository;
 
 class TemplateManager
 {
-    public function getTemplateComputed(Template $tpl, array $data)
+    public function getTemplateComputed(Template $template, array $data)
     {
-        if (!$tpl) {
+        if (!$template) {
             throw new \RuntimeException('no tpl given');
         }
+        
+        # TODO : récupération des templates et vérification de prise en charge
 
-        $replaced = clone($tpl);
+        $replaced = clone($template);
         $replaced->subject = $this->computeText($replaced->subject, $data);
         $replaced->content = $this->computeText($replaced->content, $data);
 
