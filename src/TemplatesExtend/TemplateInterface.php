@@ -26,7 +26,8 @@ interface TemplateInterface
     public function getPrefix(): string;
 
     /**
-     * @return string
+     * @param Template $template
+     * @return bool
      */
     public function isTemplated(Template $template): bool;
 }

@@ -21,10 +21,10 @@ class InstructorRepository implements Repository
     }
 
     /**
-     * @param $id
-     * @return mixed
+     * @param int $id
+     * @return Instructor
      */
-    public function getById($id)
+    public function getById($id): Instructor
     {
         return $this->base[$id];
     }

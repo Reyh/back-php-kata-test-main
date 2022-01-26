@@ -9,10 +9,20 @@ use App\Entity\Template;
  */
 abstract class AbstractTemplate implements TemplateInterface
 {
+    /**
+     * @return string
+     */
     abstract public function getPrefix(): string;
 
+    /**
+     * @return array
+     */
     abstract public function getTags(): array;
 
+    /** Check if the pattern is used in the text
+     * @param Template $template
+     * @return bool
+     */
     public function isTemplated(Template $template): bool
     {
         $pattern = sprintf('/\[%s:(%s)\]/', $this->getPrefix(), implode('|', $this->getTags()));
@@ -20,21 +30,7 @@ abstract class AbstractTemplate implements TemplateInterface
         return (preg_match($pattern, $template->getSubject() . $template->getContent()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPlaceholders(): array
-    {
-        $placeholders = [];
-
-        foreach ($this->getTags() as $tag) {
-            $placeholders[] = $this->composePlaceholder($tag);
-        }
-
-        return $placeholders;
-    }
-
-    /**
+    /** Put all the tags in an array
      * @param array $data
      * @param $placeholder
      * @param $value
@@ -45,7 +41,7 @@ abstract class AbstractTemplate implements TemplateInterface
         $data[$this->composePlaceHolder($placeholder)] = $value;
     }
 
-    /**
+    /** Generate the tag
      * @param $placeholder
      * @return string
      */

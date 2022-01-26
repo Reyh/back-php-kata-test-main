@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 class Instructor
 {
     public int $id;
@@ -69,6 +68,7 @@ class Instructor
         $this->lastname = $lastname;
         return $this;
     }
+
 
 
 }

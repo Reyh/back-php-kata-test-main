@@ -14,9 +14,6 @@ class LearnerTemplate extends AbstractTemplate
 {
     use SingletonTrait;
 
-    /**
-     *
-     */
     private const PLACE_HOLDER_FIRST_NAME = "first_name";
 
     /**
@@ -27,7 +24,7 @@ class LearnerTemplate extends AbstractTemplate
         return [self::PLACE_HOLDER_FIRST_NAME];
     }
 
-    /**
+    /** Loads all the tags contained in the template
      * @param array $data
      * @return array
      */
@@ -35,7 +32,7 @@ class LearnerTemplate extends AbstractTemplate
     {
         $user = ApplicationContext::getInstance()->getCurrentUser();
 
-        $this->addingData($data, self::PLACE_HOLDER_FIRST_NAME, $user->firstname);
+        $this->addingData($data, self::PLACE_HOLDER_FIRST_NAME, $user->getFirstname());
 
         return $data;
     }

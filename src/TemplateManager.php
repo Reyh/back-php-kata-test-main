@@ -12,12 +12,12 @@ use App\Repository\MeetingPointRepository;
 
 class TemplateManager
 {
-    public function getTemplateComputed(Template $template, array $data)
+    public function getTemplateComputed(Template $template, array $data): Template
     {
         if (!$template) {
             throw new \RuntimeException('no tpl given');
         }
-        
+
         # TODO : récupération des templates et vérification de prise en charge
 
         $replaced = clone($template);
@@ -64,25 +64,28 @@ class TemplateManager
             (strpos($text, '[lesson:instructor_name]') !== false) and $text = str_replace('[lesson:instructor_name]',$instructorOfLesson->firstname,$text);
         }
 
-        if ($lesson->meetingPointId) {
-            if(strpos($text, '[lesson:meeting_point]') !== false)
-                $text = str_replace('[lesson:meeting_point]', $usefulObject->name, $text);
+        if ($lesson->meetingPointId && strpos($text, '[lesson:meeting_point]') !== false) {
+            $text = str_replace('[lesson:meeting_point]', $usefulObject->name, $text);
         }
 
-        if(strpos($text, '[lesson:start_date]') !== false)
+        if (strpos($text, '[lesson:start_date]') !== false) {
             $text = str_replace('[lesson:start_date]', $lesson->start_time->format('d/m/Y'), $text);
+        }
 
-        if(strpos($text, '[lesson:start_time]') !== false)
+        if (strpos($text, '[lesson:start_time]') !== false) {
             $text = str_replace('[lesson:start_time]', $lesson->start_time->format('H:i'), $text);
+        }
 
-        if(strpos($text, '[lesson:end_time]') !== false)
+        if (strpos($text, '[lesson:end_time]') !== false) {
             $text = str_replace('[lesson:end_time]', $lesson->end_time->format('H:i'), $text);
+        }
 
 
-            if (isset($data['instructor'])  and ($data['instructor']  instanceof Instructor))
-                $text = str_replace('[instructor_link]',  'instructors/' . $data['instructor']->id .'-'.urlencode($data['instructor']->firstname), $text);
-            else
-                $text = str_replace('[instructor_link]', '', $text);
+        if (isset($data['instructor'])  and ($data['instructor']  instanceof Instructor)) {
+            $text = str_replace('[instructor_link]', 'instructors/' . $data['instructor']->id . '-' . urlencode($data['instructor']->firstname), $text);
+        } else {
+            $text = str_replace('[instructor_link]', '', $text);
+        }
 
         /*
          * USER

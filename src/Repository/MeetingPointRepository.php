@@ -26,7 +26,7 @@ class MeetingPointRepository implements Repository
      *
      * @return MeetingPoint
      */
-    public function getById($id)
+    public function getById($id): MeetingPoint
     {
         return $this->base[$id];
     }
